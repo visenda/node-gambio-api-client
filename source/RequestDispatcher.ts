@@ -2,7 +2,7 @@ import 'core-js/shim';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as http from 'http';
-import * as request from 'request';
+import request from 'request';
 import {
   RequestAuthOptionsInterface,
   ClientOptionsInterface,
@@ -115,9 +115,9 @@ class RequestDispatcher implements RequestDispatcherInterface {
     // Request promise handler.
     const promiseHandler = (resolve: Function, reject: Function) => {
       // Response handler.
-      const responseHandler = (error: Error, response: ResponseInterface) => {
+      const responseHandler = (error: Error, response: any) => {
         // Parsed response.
-        let parsed: string | {} = null;
+        let parsed: any = null;
 
         // Reject promise with the error parameter, if defined.
         if (error) {
