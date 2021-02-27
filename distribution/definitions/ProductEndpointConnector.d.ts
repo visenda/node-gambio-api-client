@@ -93,5 +93,12 @@ declare class ProductEndpointConnector extends AbstractEndpointConnector {
      * @throws {Error} Missing or invalid file name parameter.
      */
     uploadImage(filePath: string, fileName: string): Promise<ResponseInterface>;
+    /**
+     * Updates multiple products
+     * @param {Object} data Product entries.
+     * @returns {Promise}
+     * @throws {Error} Missing or invalid data parameter.
+     */
+    updateMultiple(data: {}[]): Promise<ResponseInterface>;
 }
 export { ProductEndpointConnector };
