@@ -217,6 +217,22 @@ class ProductEndpointConnector extends AbstractEndpointConnector {
     // Perform request.
     return this.requestDispatcher.uploadFile(this.routes.images, filePath, fileName);
   }
+
+  /**
+   * Updates multiple products
+   * @param {Object} data Product entries.
+   * @returns {Promise}
+   * @throws {Error} Missing or invalid data parameter.
+   */
+  public updateMultiple(data: {}[]): Promise<ResponseInterface> {
+    // Check data parameter.
+    if (!data || typeof data !== 'object') {
+      throw new Error('Missing or invalid data');
+    }
+
+    // Perform request.
+    return this.requestDispatcher.put(`${this.getRoute()}`, data);
+  }
 }
 
 export { ProductEndpointConnector };
