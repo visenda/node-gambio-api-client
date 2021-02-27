@@ -1,8 +1,11 @@
 import 'core-js/shim';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as http from 'http';
-import * as request from 'request';
+import got from "got";
+import {
+  Method as RequestMethod,
+  Options as RequestOptions
+} from "got/dist/source/core";
 import {
   RequestAuthOptionsInterface,
   ClientOptionsInterface,
@@ -79,11 +82,11 @@ class RequestDispatcher implements RequestDispatcherInterface {
    * Returns the default request parameters.
    * @returns {Object} Default request parameters.
    */
-  private getDefaultRequestParameters(): { headers: {}, auth: RequestAuthOptionsInterface, json: true } {
+  private getDefaultRequestParameters(): RequestOptions {
     return {
       headers: this.headers,
-      auth: this.auth,
-      json: true
+      username: this.auth.user,
+      password: this.auth.pass,
     };
   }
 
@@ -97,60 +100,51 @@ class RequestDispatcher implements RequestDispatcherInterface {
    */
   private performRequest(route: string, method: HttpMethodsEnum, data?: {}, hasFormData: boolean = false): Promise<ResponseInterface> {
     // Get HTTP method name.
-    const requestMethodName: string = HttpMethodsEnum[method];
+    const requestMethodName: RequestMethod = HttpMethodsEnum[method] as RequestMethod;
 
     // Request data body property name.
-    const dataPropertyName: string = hasFormData ? 'formData' : (method === HttpMethodsEnum.GET ? 'qs' : 'body');
+    const dataPropertyName: string = hasFormData ? 'form' : (method === HttpMethodsEnum.GET ? 'searchParams' : 'json');
 
     // Set addtional request parameters.
-    const additionalParameters: request.CoreOptions & request.RequiredUriUrl = {
+    const additionalParameters: RequestOptions = {
       url: this.url + route,
       method: requestMethodName,
       [dataPropertyName]: data,
     };
 
     // Merge default request parameters with addtional ones.
-    const mergedParameters: request.CoreOptions & request.RequiredUriUrl = Object.assign(this.getDefaultRequestParameters(), additionalParameters);
+    const mergedParameters: RequestOptions = Object.assign(this.getDefaultRequestParameters(), additionalParameters);
 
-    // Request promise handler.
-    const promiseHandler = (resolve: Function, reject: Function) => {
-      // Response handler.
-      const responseHandler = (error: Error, response: ResponseInterface) => {
-        // Parsed response.
-        let parsed: string | {} = null;
+    return new Promise((resolve: Function, reject: Function): Promise<ResponseInterface> => {
+      return got(mergedParameters)
+          // @ts-ignore because it returns a promise!
+          .then((response) => {
+            // Reject promise with the response body, if the status code is not ok.
+            if (response.statusCode < 200 || response.statusCode > 299) {
+              reject(response.body);
+              return;
+            }
 
-        // Reject promise with the error parameter, if defined.
-        if (error) {
-          reject(error);
-          return;
-        }
+            // Parsed response.
+            let parsed: string | {} = null;
 
-        // Reject promise with the response body, if the status code is not ok.
-        if (response.statusCode < 200 || response.statusCode > 299) {
-          reject(response.body);
-          return;
-        }
+            // Parse the response body.
+            try {
+              if (typeof response.body === 'string') {
+                parsed = JSON.parse(response.body);
+              } else {
+                parsed = response.body;
+              }
+            } catch (parseError) {
+              resolve(response.body);
+              return;
+            }
 
-        // Parse the response body.
-        try {
-          if (typeof response.body === 'string') {
-            parsed = JSON.parse(response.body);
-          } else {
-            parsed = response.body;
-          }
-        } catch (parseError) {
-          resolve(response.body);
-        }
-
-        // Resolve promise.
-        resolve(parsed);
-      };
-
-      // Send request.
-      request(mergedParameters, responseHandler);
-    };
-
-    return new Promise(promiseHandler);
+            // Resolve promise.
+            resolve(parsed);
+          })
+          .catch((error) => reject(error));
+    });
   }
 
   /**
