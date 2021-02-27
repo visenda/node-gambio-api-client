@@ -14,4 +14,3 @@ var HttpMethodsEnum;
     HttpMethodsEnum[HttpMethodsEnum["PATCH"] = 4] = "PATCH";
 })(HttpMethodsEnum || (HttpMethodsEnum = {}));
 exports.HttpMethodsEnum = HttpMethodsEnum;
-//# sourceMappingURL=HttpMethodsEnum.js.map

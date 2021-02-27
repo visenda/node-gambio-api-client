@@ -504,4 +504,3 @@ class OrderEndpointConnector extends _1.AbstractEndpointConnector {
     }
 }
 exports.OrderEndpointConnector = OrderEndpointConnector;
-//# sourceMappingURL=OrderEndpointConnector.js.map

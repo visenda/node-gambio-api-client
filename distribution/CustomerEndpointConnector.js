@@ -38,4 +38,3 @@ class CustomerEndpointConnector extends _1.AbstractEndpointConnector {
     }
 }
 exports.CustomerEndpointConnector = CustomerEndpointConnector;
-//# sourceMappingURL=CustomerEndpointConnector.js.map

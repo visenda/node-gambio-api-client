@@ -165,4 +165,3 @@ class CategoryEndpointConnector extends _1.AbstractEndpointConnector {
     }
 }
 exports.CategoryEndpointConnector = CategoryEndpointConnector;
-//# sourceMappingURL=CategoryEndpointConnector.js.map

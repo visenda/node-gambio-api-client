@@ -99,4 +99,3 @@ class EmailEndpointConnector extends _1.AbstractEndpointConnector {
     }
 }
 exports.EmailEndpointConnector = EmailEndpointConnector;
-//# sourceMappingURL=EmailEndpointConnector.js.map

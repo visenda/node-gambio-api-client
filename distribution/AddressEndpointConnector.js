@@ -16,4 +16,3 @@ class AddressEndpointConnector extends _1.AbstractEndpointConnector {
     }
 }
 exports.AddressEndpointConnector = AddressEndpointConnector;
-//# sourceMappingURL=AddressEndpointConnector.js.map

@@ -52,4 +52,3 @@ exports.Client = Client;
  * @type {String}
  */
 Client.VERSION = '1.0.0';
-//# sourceMappingURL=Client.js.map

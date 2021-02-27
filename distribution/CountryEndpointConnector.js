@@ -30,4 +30,3 @@ class CountryEndpointConnector extends _1.AbstractEndpointConnector {
     }
 }
 exports.CountryEndpointConnector = CountryEndpointConnector;
-//# sourceMappingURL=CountryEndpointConnector.js.map

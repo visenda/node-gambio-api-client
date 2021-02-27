@@ -19,4 +19,3 @@ Configuration.API_VERSION = 2;
  * @static
  */
 Configuration.API_URL = `/api.php/v${Configuration.API_VERSION}`;
-//# sourceMappingURL=Configuration.js.map

@@ -1,10 +1,32 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequestDispatcher = void 0;
 require("core-js/shim");
-const path = require("path");
-const fs = require("fs");
-const got_1 = require("got");
+const path = __importStar(require("path"));
+const fs = __importStar(require("fs"));
+const request_1 = __importDefault(require("request"));
 const Enums_1 = require("./Enums");
 const _1 = require(".");
 /**
@@ -58,8 +80,8 @@ class RequestDispatcher {
     getDefaultRequestParameters() {
         return {
             headers: this.headers,
-            username: this.auth.user,
-            password: this.auth.pass,
+            auth: this.auth,
+            json: true
         };
     }
     /**
@@ -74,7 +96,7 @@ class RequestDispatcher {
         // Get HTTP method name.
         const requestMethodName = Enums_1.HttpMethodsEnum[method];
         // Request data body property name.
-        const dataPropertyName = hasFormData ? 'form' : (method === Enums_1.HttpMethodsEnum.GET ? 'searchParams' : 'json');
+        const dataPropertyName = hasFormData ? 'formData' : (method === Enums_1.HttpMethodsEnum.GET ? 'qs' : 'body');
         // Set addtional request parameters.
         const additionalParameters = {
             url: this.url + route,
@@ -83,17 +105,22 @@ class RequestDispatcher {
         };
         // Merge default request parameters with addtional ones.
         const mergedParameters = Object.assign(this.getDefaultRequestParameters(), additionalParameters);
-        return new Promise((resolve, reject) => {
-            return got_1.default(mergedParameters)
-                // @ts-ignore because it returns a promise!
-                .then((response) => {
+        // Request promise handler.
+        const promiseHandler = (resolve, reject) => {
+            // Response handler.
+            const responseHandler = (error, response) => {
+                // Parsed response.
+                let parsed = null;
+                // Reject promise with the error parameter, if defined.
+                if (error) {
+                    reject(error);
+                    return;
+                }
                 // Reject promise with the response body, if the status code is not ok.
                 if (response.statusCode < 200 || response.statusCode > 299) {
                     reject(response.body);
                     return;
                 }
-                // Parsed response.
-                let parsed = null;
                 // Parse the response body.
                 try {
                     if (typeof response.body === 'string') {
@@ -105,13 +132,14 @@ class RequestDispatcher {
                 }
                 catch (parseError) {
                     resolve(response.body);
-                    return;
                 }
                 // Resolve promise.
                 resolve(parsed);
-            })
-                .catch((error) => reject(error));
-        });
+            };
+            // Send request.
+            request_1.default(mergedParameters, responseHandler);
+        };
+        return new Promise(promiseHandler);
     }
     /**
      * Performs a HTTP GET request to a specific endpoint and returns a promise.
@@ -260,4 +288,3 @@ class RequestDispatcher {
     }
 }
 exports.RequestDispatcher = RequestDispatcher;
-//# sourceMappingURL=RequestDispatcher.js.map

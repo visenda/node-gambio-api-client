@@ -210,4 +210,3 @@ class ProductEndpointConnector extends _1.AbstractEndpointConnector {
     }
 }
 exports.ProductEndpointConnector = ProductEndpointConnector;
-//# sourceMappingURL=ProductEndpointConnector.js.map

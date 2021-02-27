@@ -25,4 +25,3 @@ var ProductEndpointConnector_1 = require("./ProductEndpointConnector");
 Object.defineProperty(exports, "ProductEndpointConnector", { enumerable: true, get: function () { return ProductEndpointConnector_1.ProductEndpointConnector; } });
 var ZoneEndpointConnector_1 = require("./ZoneEndpointConnector");
 Object.defineProperty(exports, "ZoneEndpointConnector", { enumerable: true, get: function () { return ZoneEndpointConnector_1.ZoneEndpointConnector; } });
-//# sourceMappingURL=index.js.map
