@@ -126,7 +126,7 @@ class RequestDispatcher implements RequestDispatcherInterface {
             }
 
             // Parsed response.
-            let parsed: string | {} = null;
+            let parsed: any = null;
 
             // Parse the response body.
             try {
@@ -143,7 +143,7 @@ class RequestDispatcher implements RequestDispatcherInterface {
             // Resolve promise.
             resolve(parsed);
           })
-          .catch((error) => reject(error));
+          .catch((error: any) => reject(error));
     });
   }
 

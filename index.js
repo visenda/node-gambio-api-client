@@ -1,1 +1,1 @@
-module.exports = require('./distribution/scripts').Client;
+module.exports = require('./distribution').Client;

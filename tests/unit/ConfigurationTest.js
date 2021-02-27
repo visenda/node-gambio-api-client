@@ -1,5 +1,5 @@
 import test from 'tape';
-import { Configuration } from './../../distribution/scripts';
+import { Configuration } from '../../distribution';
 
 test('Configuration::API_VERSION', t => {
   t.equal(typeof Configuration.API_VERSION, 'number', 'Is a number');

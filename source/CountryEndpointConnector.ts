@@ -1,4 +1,4 @@
-import { AbstractEndpointConnector, RequestDispatcher } from '.';
+import { AbstractEndpointConnector } from '.';
 import { ResponseInterface } from './Interfaces';
 
 /**

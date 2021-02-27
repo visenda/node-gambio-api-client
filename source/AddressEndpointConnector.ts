@@ -1,4 +1,4 @@
-import { AbstractEndpointConnector, RequestDispatcher } from '.';
+import { AbstractEndpointConnector } from '.';
 
 /**
  * Provides methods to perform requests to the shop's address endpoint.

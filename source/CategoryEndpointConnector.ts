@@ -1,5 +1,5 @@
-import { AbstractEndpointConnector, RequestDispatcher } from '.';
-import { ResponseInterface, GetOptionsInterface } from './Interfaces';
+import { AbstractEndpointConnector } from '.';
+import { ResponseInterface } from './Interfaces';
 
 /**
  * Provides methods to perform requests to the shop's category endpoint.

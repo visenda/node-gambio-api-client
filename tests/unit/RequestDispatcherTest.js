@@ -1,5 +1,5 @@
 import test from 'tape';
-import { RequestDispatcher } from './../../distribution/scripts';
+import { RequestDispatcher } from '../../distribution';
 import { noop, reusableTesters } from './../../tools/helpers';
 import { login, file } from './../../tools/fixtures';
 import { variables } from './../../tools/values';

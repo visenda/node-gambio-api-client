@@ -1,8 +1,23 @@
 {
-  "declaration": true,
-  "experimentalDecorators": true,
-  "target": "ES5",
-  "module": "commonjs",
-  "moduleResolution": "node",
-  "noImplicitAny": true
+  "compilerOptions": {
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "declaration": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "rootDir": "./source",
+    "outDir": "./distribution2",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  },
+  "compileOnSave": true,
+  "include": [
+    "./source/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }

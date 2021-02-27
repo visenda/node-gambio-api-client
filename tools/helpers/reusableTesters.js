@@ -1,7 +1,7 @@
 import { noop } from '.';
 import { variables } from './../values';
 import { login } from './../fixtures';
-import { RequestDispatcher } from './../../distribution/scripts';
+import { RequestDispatcher } from '../../distribution';
 
 /**
  * Performs a test to the constructor of an EndpointConnector instance.

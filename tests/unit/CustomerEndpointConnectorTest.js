@@ -1,5 +1,5 @@
 import test from 'tape';
-import { CustomerEndpointConnector, RequestDispatcher } from './../../distribution/scripts';
+import { CustomerEndpointConnector, RequestDispatcher } from '../../distribution';
 import { reusableTesters } from './../../tools/helpers';
 import { login } from './../../tools/fixtures';
 import { variables } from './../../tools/values';
