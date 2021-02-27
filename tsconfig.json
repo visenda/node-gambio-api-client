@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "declaration": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "rootDir": "./source",
-    "outDir": "./distribution2",
+    "outDir": "./distribution",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017",
+    "target": "ES6",
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
